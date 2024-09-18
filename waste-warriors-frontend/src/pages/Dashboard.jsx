@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { brandLogo, navLinks, userProfile } from '../data/navData'; // Import the data
+import Map from '../components/MapComponent';
 
 
 const DashboardPreview = () => {
