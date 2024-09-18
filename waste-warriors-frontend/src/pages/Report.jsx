@@ -3,25 +3,10 @@ import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Download, Printer } from 'lucide-react';
 import NavBar from '../components/NavBar';
+import { navLinks, userProfile, brandLogo } from '../data/navData';
 
 const ReportPagePreview = () => {
   const [dateRange, setDateRange] = useState('last30days');
-
-  const navLinks = [
-    { href: '/', name: 'Dashboard', current: true },
-    { href: '/add-waste', name: 'Input Waste', current: false },
-    { href: '/report', name: 'Reports', current: false },
-  ];
-
-  const userProfile = {
-    imageSrc:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    menuItems: [
-      { name: 'Your Profile', href: '#' },
-      { name: 'Settings', href: '#' },
-      { name: 'Sign out', href: '#' },
-    ],
-  };
 
   // Mock data for charts
   const wasteByTypeData = [
@@ -50,11 +35,11 @@ const ReportPagePreview = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-        <NavBar
-          brandLogo={{ src: 'https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500', alt: 'Your Company' }}
-          navigation={navLinks}
-          userProfile={userProfile}
-        />
+      <NavBar
+        brandLogo={{ src: brandLogo.src, alt: brandLogo.alt }}
+        navigation={navLinks}
+        userProfile={userProfile}
+      />
 
       <div className="py-10">
         <header>

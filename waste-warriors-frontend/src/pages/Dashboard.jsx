@@ -2,25 +2,12 @@
 import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { brandLogo, navLinks, userProfile } from '../data/navData'; // Import the data
+
 
 const DashboardPreview = () => {
   const [activeTab, setActiveTab] = useState('overview');
 
-  const navLinks = [
-    { href: '/', name: 'Dashboard', current: true },
-    { href: '/add-waste', name: 'Input Waste', current: false },
-    { href: '/report', name: 'Reports', current: false },
-  ];
-
-  const userProfile = {
-    imageSrc:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    menuItems: [
-      { name: 'Your Profile', href: '#' },
-      { name: 'Settings', href: '#' },
-      { name: 'Sign out', href: '#' },
-    ],
-  };
 
   // Mock data for the waste entries
   const wasteEntries = [
@@ -70,6 +57,7 @@ const DashboardPreview = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <NavBar
+        brandLogo={{ src: brandLogo.src, alt: brandLogo.alt }}
         navigation={navLinks}
         userProfile={userProfile}
       />

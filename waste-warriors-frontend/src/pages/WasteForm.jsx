@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { PlusIcon } from 'lucide-react';
 import NavBar from '../components/NavBar';
+import { brandLogo, navLinks, userProfile } from '../data/navData'; // Import the data
+
 
 const InputWastePreview = () => {
   const [formData, setFormData] = useState({
@@ -12,22 +14,6 @@ const InputWastePreview = () => {
     date: '',
     description: '',
   });
-
-  const navLinks = [
-    { href: '/', name: 'Dashboard', current: true },
-    { href: '/add-waste', name: 'Input Waste', current: false },
-    { href: '/report', name: 'Reports', current: false },
-  ];
-
-  const userProfile = {
-    imageSrc:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    menuItems: [
-      { name: 'Your Profile', href: '#' },
-      { name: 'Settings', href: '#' },
-      { name: 'Sign out', href: '#' },
-    ],
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,7 +42,7 @@ const InputWastePreview = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <NavBar
-        brandLogo={{ src: 'https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500', alt: 'Your Company' }}
+        brandLogo={{ src: brandLogo.src, alt: brandLogo.alt }}
         navigation={navLinks}
         userProfile={userProfile}
       />
