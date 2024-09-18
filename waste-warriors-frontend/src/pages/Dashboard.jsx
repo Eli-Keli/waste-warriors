@@ -57,7 +57,7 @@ const DashboardPreview = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <NavBar
-        brandLogo={{ src: brandLogo.src, alt: brandLogo.alt }}
+        // brandLogo={{ src: brandLogo.src, alt: brandLogo.alt }}
         navigation={navLinks}
         userProfile={userProfile}
       />
