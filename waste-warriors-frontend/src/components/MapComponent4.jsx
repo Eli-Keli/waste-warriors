@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 
 // Define default location coordinates
-const defaultPosition = [51.505, -0.09]; // Latitude and Longitude
+const defaultPosition = [-1.28333, 36.81667]; // Latitude and Longitude
 
 function MapComponent() {
   const [position, setPosition] = useState(defaultPosition);
