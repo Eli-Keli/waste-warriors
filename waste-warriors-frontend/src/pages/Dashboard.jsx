@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { brandLogo, navLinks, userProfile } from '../data/navData'; // Import the data
-import Map from '../components/MapComponent';
+import Map from '../components/MapComponent4';
 
 
 const DashboardPreview = () => {
@@ -125,7 +125,9 @@ const DashboardPreview = () => {
                     </div>
                   ) : (
                     <div className="h-full flex items-center justify-center">
-                      <p className="text-gray-500">Map view placeholder - Integration Google Maps would go here</p>
+                      {/* <p className="text-gray-500">Map view placeholder - Integration Google Maps would go here</p> */}
+                      <Map />
+
                     </div>
                   )}
                 </div>
