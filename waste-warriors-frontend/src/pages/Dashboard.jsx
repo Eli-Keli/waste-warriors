@@ -1,10 +1,26 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import NavBar from '../components/NavBar';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const DashboardPreview = () => {
   const [activeTab, setActiveTab] = useState('overview');
+
+  const navLinks = [
+    { href: '/', name: 'Dashboard', current: true },
+    { href: '/add-waste', name: 'Input Waste', current: false },
+    { href: '/report', name: 'Reports', current: false },
+  ];
+
+  const userProfile = {
+    imageSrc:
+      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    menuItems: [
+      { name: 'Your Profile', href: '#' },
+      { name: 'Settings', href: '#' },
+      { name: 'Sign out', href: '#' },
+    ],
+  };
 
   // Mock data for the waste entries
   const wasteEntries = [
@@ -53,28 +69,10 @@ const DashboardPreview = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex">
-              <div className="flex-shrink-0 flex items-center">
-                <span className="text-xl font-bold text-indigo-600">Waste Warriors</span>
-              </div>
-              <div className="ml-6 flex space-x-8">
-                <Link to="/" className="inline-flex items-center px-1 pt-1 border-b-2 border-indigo-500 text-sm font-medium text-gray-900">
-                  Dashboard
-                </Link>
-                <Link to="/add-waste" className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900">
-                  Input Waste
-                </Link>
-                <Link to="/report" className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-900">
-                  Reports
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <NavBar
+        navigation={navLinks}
+        userProfile={userProfile}
+      />
 
       <div className="py-10">
         <header>
