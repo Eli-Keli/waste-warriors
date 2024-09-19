@@ -1,8 +1,13 @@
 from flask import Flask, jsonify, request, abort
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS  # Import CORS
 
 # Initialize the Flask application
 app = Flask(__name__)
+
+# Enable CORS for the app
+CORS(app)  # You can also pass specific configurations to CORS
+
 
 # Configure the SQLite database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///waste_management.db'
@@ -39,6 +44,7 @@ def get_waste_entries():
 @app.route('/waste', methods=['POST'])
 def add_waste_entry():
     data = request.json
+    print(data)
     new_entry = WasteEntry(
         waste_type=data['waste_type'],
         quantity=data['quantity'],
