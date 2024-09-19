@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { PlusIcon } from 'lucide-react';
 import NavBar from '../components/NavBar';
 import { brandLogo, navLinks, userProfile } from '../data/navData'; // Import the data
-import axiosInstance from "../../axiosInstance"
+
 
 const InputWastePreview = () => {
   const [formData, setFormData] = useState({
@@ -23,37 +23,20 @@ const InputWastePreview = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-  
-    try {
-      const response = await axiosInstance.post('/waste', {
-        waste_type: formData.wasteType,
-        quantity: formData.quantity,
-        location: formData.location,
-      });
-  
-      if (response.status >= 200 && response.status < 300) {
-        console.log('Waste data submitted successfully:', response.data);
-        alert('Waste data submitted successfully!');
-  
-        // Reset form after submission
-        setFormData({
-          wasteType: '',
-          quantity: '',
-          unit: 'kg',
-          location: '',
-          date: '',
-          description: '',
-        });
-      } else {
-        console.error('Failed to submit waste data');
-        alert('Failed to submit waste data');
-      }
-    } catch (error) {
-      console.error('Error submitting waste data:', error);
-      alert('Error submitting waste data');
-    }
+    // In a real application, you would handle form submission here
+    console.log('Form submitted:', formData);
+    alert('Waste data submitted successfully!');
+    // Reset form after submission
+    setFormData({
+      wasteType: '',
+      quantity: '',
+      unit: 'kg',
+      location: '',
+      date: '',
+      description: '',
+    });
   };
 
   return (
