@@ -2,7 +2,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import DashboardPreview from './pages/Dashboard'
-import InputWastePreview from './pages/WasteForm';
+import InputWastePreview from './pages/WasteForm2';
 import ReportPagePreview from './pages/Report';
 
 function App() {
