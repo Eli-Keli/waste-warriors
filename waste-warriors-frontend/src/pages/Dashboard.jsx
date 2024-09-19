@@ -3,12 +3,17 @@ import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { brandLogo, navLinks, userProfile } from '../data/navData'; // Import the data
-import Map from '../components/MapComponent4';
+import Map from '../components/MapComponent5';
 
 
 const DashboardPreview = () => {
   const [activeTab, setActiveTab] = useState('overview');
 
+  const markersData = [
+    { lat: -1.28333, lng: 36.81667, popupContent: 'Default Marker' },
+    { lat: -1.2900, lng: 36.8200, popupContent: 'Another Marker' },
+    { lat: -1.3000, lng: 36.8100, popupContent: 'Third Marker' },
+  ];
 
   // Mock data for the waste entries
   const wasteEntries = [
@@ -126,8 +131,7 @@ const DashboardPreview = () => {
                   ) : (
                     <div className="h-full flex items-center justify-center">
                       {/* <p className="text-gray-500">Map view placeholder - Integration Google Maps would go here</p> */}
-                      <Map />
-
+                      <Map markers={markersData} />
                     </div>
                   )}
                 </div>
