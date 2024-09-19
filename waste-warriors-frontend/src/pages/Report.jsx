@@ -5,33 +5,85 @@ import { Download, Printer } from 'lucide-react';
 import NavBar from '../components/NavBar';
 import { navLinks, userProfile, brandLogo } from '../data/navData';
 
+// Mock data for charts
+const wasteByTypeData = [
+  {
+    name: 'Infectious',
+    amount: 1200
+  },
+  {
+    name: 'Sharps',
+    amount: 800
+  },
+  {
+    name: 'Chemical',
+    amount: 600
+  },
+  {
+    name: 'Pharmaceutical',
+    amount: 400
+  },
+  {
+    name: 'Radioactive',
+    amount: 200
+  },
+];
+
+const wasteByLocationData = [
+  {
+    name: 'Hospital A',
+    amount: 1500
+  },
+  {
+    name: 'Clinic B',
+    amount: 800
+  },
+  {
+    name: 'Lab C',
+    amount: 600
+  },
+  {
+    name: 'Pharmacy D',
+    amount: 300
+  },
+];
+
+const wasteOverTimeData = [
+  {
+    name: 'Week 1',
+    amount: 800
+  },
+  {
+    name: 'Week 2',
+    amount: 950
+  },
+  {
+    name: 'Week 3',
+    amount: 1100
+  },
+  {
+    name: 'Week 4',
+    amount: 900
+  },
+  {
+    name: 'Week 5',
+    amount: 1000
+  },
+  {
+    name: 'Week 6',
+    amount: 1200
+  },
+  {
+    name: 'Week 7',
+    amount: 1050
+  }
+];
+
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
+
 const ReportPagePreview = () => {
   const [dateRange, setDateRange] = useState('last30days');
 
-  // Mock data for charts
-  const wasteByTypeData = [
-    { name: 'Infectious', amount: 1200 },
-    { name: 'Sharps', amount: 800 },
-    { name: 'Chemical', amount: 600 },
-    { name: 'Pharmaceutical', amount: 400 },
-    { name: 'Radioactive', amount: 200 },
-  ];
-
-  const wasteByLocationData = [
-    { name: 'Hospital A', amount: 1500 },
-    { name: 'Clinic B', amount: 800 },
-    { name: 'Lab C', amount: 600 },
-    { name: 'Pharmacy D', amount: 300 },
-  ];
-
-  const wasteOverTimeData = [
-    { name: 'Week 1', amount: 800 },
-    { name: 'Week 2', amount: 950 },
-    { name: 'Week 3', amount: 1100 },
-    { name: 'Week 4', amount: 900 },
-  ];
-
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884D8'];
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -58,7 +110,7 @@ const ReportPagePreview = () => {
                       <select
                         id="dateRange"
                         name="dateRange"
-                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                        className="mt-1 block w-full px-3 py-2 text-base border sm:text-sm rounded-md"
                         value={dateRange}
                         onChange={(e) => setDateRange(e.target.value)}
                       >
