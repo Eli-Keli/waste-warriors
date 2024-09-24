@@ -17,7 +17,7 @@ function MapComponent({ markers }) {
     <MapContainer
       center={position}
       zoom={13}
-      style={{ height: '100vh', width: '100%' }}
+      style={{ height: '500px', width: '85%' }}
       onClick={handleMapClick}
     >
       <TileLayer

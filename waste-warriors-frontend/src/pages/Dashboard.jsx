@@ -4,61 +4,85 @@ import NavBar from '../components/NavBar';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { brandLogo, navLinks, userProfile } from '../data/navData'; // Import the data
 import Map from '../components/MapComponent5';
+import { Award, CheckCircle } from 'lucide-react';
+import VolunteerModal from '../components/VolunteerModal';
+
+
+
+// Mock data for the waste entries
+const wasteEntries = [
+  {
+    id: 1, type: 'Infectious',
+    quantity: 50,
+    location: 'Hospital A'
+  },
+  {
+    id: 2, type: 'Sharps',
+    quantity: 20,
+    location: 'Clinic B'
+  },
+  {
+    id: 3, type: 'Chemical',
+    quantity: 30,
+    location: 'Lab C'
+  },
+  {
+    id: 4, type: 'Pharmaceutical',
+    quantity: 15,
+    location: 'Pharmacy D'
+  },
+];
+
+// Mock data for the chart
+const chartData = [
+  {
+    name: 'Infectious',
+
+    amount: 120
+  },
+  {
+    name: 'Sharps',
+    amount: 80
+  },
+  {
+    name: 'Chemical',
+    amount: 60
+  },
+  {
+    name: 'Pharmaceutical',
+    amount: 40
+  },
+];
+
+const markersData = [
+  { lat: -1.28333, lng: 36.81667, popupContent: 'Hospital A' },
+  { lat: -1.2900, lng: 36.8200, popupContent: 'Transfer Station X' },
+  { lat: -1.3000, lng: 36.8100, popupContent: 'Treatment Facility' },
+  { lat: -1.2950, lng: 36.8050, popupContent: 'Disposal Site' }
+];
 
 
 const DashboardPreview = () => {
   const [activeTab, setActiveTab] = useState('overview');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showMap, setShowMap] = useState(true);
 
-  const markersData = [
-    { lat: -1.28333, lng: 36.81667, popupContent: 'Default Marker' },
-    { lat: -1.2900, lng: 36.8200, popupContent: 'Another Marker' },
-    { lat: -1.3000, lng: 36.8100, popupContent: 'Third Marker' },
-  ];
+  const handleOpenModal = () => {
+    setShowMap(false);
+    setIsModalOpen(true)
+  };
+  const handleCloseModal = () => {
+    setShowMap(true);
+    setIsModalOpen(false)
+  };
 
-  // Mock data for the waste entries
-  const wasteEntries = [
-    {
-      id: 1, type: 'Infectious',
-      quantity: 50,
-      location: 'Hospital A'
-    },
-    {
-      id: 2, type: 'Sharps',
-      quantity: 20,
-      location: 'Clinic B'
-    },
-    {
-      id: 3, type: 'Chemical',
-      quantity: 30,
-      location: 'Lab C'
-    },
-    {
-      id: 4, type: 'Pharmaceutical',
-      quantity: 15,
-      location: 'Pharmacy D'
-    },
-  ];
+  const handleSubmitVolunteer = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    console.log("Submitted successfully");
+    handleCloseModal();
+  };
 
-  // Mock data for the chart
-  const chartData = [
-    {
-      name: 'Infectious',
-
-      amount: 120
-    },
-    {
-      name: 'Sharps',
-      amount: 80
-    },
-    {
-      name: 'Chemical',
-      amount: 60
-    },
-    {
-      name: 'Pharmaceutical',
-      amount: 40
-    },
-  ];
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -77,7 +101,7 @@ const DashboardPreview = () => {
         <main>
           <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div className="px-4 py-8 sm:px-0">
-              <div className="border-4 border-dashed border-gray-200 rounded-lg h-96">
+              <div className="border-4 border-dashed border-gray-200 rounded-lg h-full">
                 <div className="flex border-b border-gray-200">
                   <button
                     className={`px-4 py-2 text-sm font-medium ${activeTab === 'overview' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
@@ -92,6 +116,7 @@ const DashboardPreview = () => {
                     Waste Journey Map
                   </button>
                 </div>
+
                 <div className="p-4">
                   {activeTab === 'overview' ? (
                     <div>
@@ -129,9 +154,106 @@ const DashboardPreview = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="h-full flex items-center justify-center">
-                      {/* <p className="text-gray-500">Map view placeholder - Integration Google Maps would go here</p> */}
-                      <Map markers={markersData} />
+                    <div className="h-full flex flex-col justify-center">
+                      <h3 className="text-lg leading-6 font-medium text-gray-900 mb-4">Waste Journey Map</h3>
+                      {
+                        showMap && <Map markers={markersData} />
+                      }
+
+                      <div className="p-5">
+                        <div className="mt-4">
+                          <h4 className="text-sm font-medium text-gray-500">Journey Stages:</h4>
+                          <ul className="mt-2 list-disc list-inside text-sm text-gray-600">
+                            <li>Generated at Hospital A</li>
+                            <li>Transferred to Transfer Station</li>
+                            <li>Processed at Treatment Facility</li>
+                            <li>Final Disposal at Disposal Site</li>
+                          </ul>
+                        </div>
+                      </div>
+
+                      {/* Volunteer/Community Section */}
+                      <div className="bg-gray-50 px-4 py-5 sm:p-6">
+                        <h3 className="text-lg leading-6 font-medium text-gray-900">Get Involved</h3>
+                        <div className="mt-2">
+                          <p className="text-sm text-gray-500">
+                            Join our community of volunteers and help us improve medical waste management in your local area.
+                          </p>
+                          <div className="mt-4 flex">
+                            <div className="flex-shrink-0">
+                              <CheckCircle className="h-6 w-6 text-green-500" />
+                            </div>
+                            <div className="ml-3">
+                              <h4 className="text-sm font-medium text-gray-900">Volunteer Opportunities</h4>
+                              <p className="text-sm text-gray-500">
+                                Assist with waste collection, sorting, and transportation. Sign up to volunteer today!
+                              </p>
+                              <button className="mt-2 inline-flex items-center px-4 py-2 border rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                                onClick={handleOpenModal}
+                              >
+                                Join as a Volunteer
+                              </button>
+
+                              {/* Volunteer Modal */}
+                              <VolunteerModal
+                                isOpen={isModalOpen}
+                                onClose={handleCloseModal}
+                                onSubmit={handleSubmitVolunteer}
+                              />
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Rewards Section */}
+                      <div className="bg-white px-4 py-5 sm:p-6">
+                        <h3 className="text-lg leading-6 font-medium text-gray-900">Rewards and Incentives</h3>
+                        <div className="mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                          <div className="bg-gray-50 overflow-hidden rounded-lg">
+                            <div className="px-4 py-5 sm:p-6">
+                              <div className="flex">
+                                <div className="flex-shrink-0">
+                                  <Award className="h-6 w-6 text-yellow-500" />
+                                </div>
+                                <div className="ml-3">
+                                  <h4 className="text-sm font-medium text-gray-900">Top Waste Collectors</h4>
+                                  <p className="mt-1 text-sm text-gray-500">
+                                    Earn rewards for collecting the most waste each month.
+                                  </p>
+                                  <p className="mt-2 flex items-baseline text-2xl font-semibold text-gray-900">
+                                    $10
+                                    <span className="ml-2 text-sm font-medium text-gray-500">
+                                      (KES 1290.00) gift card
+                                    </span>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="bg-gray-50 overflow-hidden rounded-lg">
+                            <div className="px-4 py-5 sm:p-6">
+                              <div className="flex">
+                                <div className="flex-shrink-0">
+                                  <Award className="h-6 w-6 text-yellow-500" />
+                                </div>
+                                <div className="ml-3">
+                                  <h4 className="text-sm font-medium text-gray-900">Referral Bonus</h4>
+                                  <p className="mt-1 text-sm text-gray-500">
+                                    Invite friends to join and earn rewards.
+                                  </p>
+                                  <p className="mt-2 flex items-baseline text-2xl font-semibold text-gray-900">
+                                    $5
+                                    <span className="ml-2 text-sm font-medium text-gray-500">
+                                      (KES 645.00) per referral
+                                    </span>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -141,6 +263,8 @@ const DashboardPreview = () => {
         </main>
       </div>
     </div>
+
+
   );
 };
 
