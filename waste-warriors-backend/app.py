@@ -36,6 +36,11 @@ with app.app_context():
     db.create_all()
 
 # Define API routes
+@app.route('/hello_world', methods=['GET'])
+def hello_world():
+    message = "Hello Waste Warriors"
+    return jsonify(message)
+
 @app.route('/waste', methods=['GET'])
 def get_waste_entries():
     entries = WasteEntry.query.all()
