@@ -1,6 +1,7 @@
 import { Disclosure, Menu, MenuButton, MenuItems, MenuItem, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import PropTypes from 'prop-types'; // Import PropTypes
+import DialPhoneNumber from './DialPhoneNumber';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
