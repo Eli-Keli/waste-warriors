@@ -16,7 +16,7 @@ export const userProfile = {
     menuItems: [
       { name: 'Your Profile', href: '#' },
       { name: 'Settings', href: '#' },
-      { name: 'Contact Us', href: `tel: +254111052355` },
+      { name: 'Contact Us', href: `tel: +254742560540` },
       { name: 'Sign out', href: '#' },
     ],
   };

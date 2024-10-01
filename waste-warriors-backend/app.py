@@ -101,14 +101,14 @@ def build_response(response_string):
     response += '</Response>'
     return response
 
-@app.route('/reply_call_AFR', methods=['POST'])
-def reply_call_AFR():
+
+@app.route('/handle_call_AF', methods=['POST'])
+def handle_call():
     session_id = request.values.get("sessionId", None)
     is_active = request.values.get("isActive", False)
+    caller_number = format_phone_number(request.values.get("callerNumber", None))
 
     if is_active == "1":
-        # Call is active
-        caller_number = format_phone_number(request.values.get("callerNumber", None))
         dtmf_digits = request.values.get("dtmfDigits", None)
 
         if dtmf_digits is None:
@@ -127,9 +127,7 @@ def reply_call_AFR():
                 response_string = '<Say>Connecting you to a Waste Warriors agent.</Say>'
                 response_string += '<Dial phoneNumbers="+254797329362" />'
             elif dtmf_digits == "3":
-                response_string = '<Record finishOnKey="#" maxLength="10" trimSilence="true" playBeep="true">'
-                response_string += '<Say>Please record your issue after the beep.</Say>'
-                response_string +='</Record>'
+                response_string = '<Redirect>https://stimaingine-backend.onrender.com/record_issue</Redirect>'
             else:
                 response_string = '<GetDigits timeout="10" numDigits="1">'
                 response_string += '<Say>Invalid input. Please try again. '
@@ -140,14 +138,68 @@ def reply_call_AFR():
         
         response = make_response(build_response(response_string))
         response.headers['Content-Type'] = 'text/xml'
-        thankyoumessage = "Thank you for contacting WasteWarriors. We value your feedback"
-        print(f"Sending message to {caller_number}")
-        send_sms_alert(caller_number, thankyoumessage)
         return response
     else:
         # Call is not active
         return "OK"
 
+
+@app.route('/record_issue_AF', methods=['POST'])
+def record_issue():
+    session_id = request.values.get("sessionId", None)
+    is_active = request.values.get("isActive", False)
+    caller_number = format_phone_number(request.values.get("callerNumber", None))
+    print(f"Request record_issue endpoint - {request.values}")
+
+    if is_active == "1":
+        # Call is active
+        response_string = '<Record finishOnKey="#" maxLength="15" trimSilence="true" playBeep="true" callbackUrl="https://stimaingine-backend.onrender.com/save_recording_AF">'
+        response_string += '<Say>Please record your issue after the beep.</Say>'
+        response_string +='</Record>'
+
+        response = make_response(build_response(response_string))
+        response.headers['Content-Type'] = 'text/xml'
+        return response
+    else:
+        recording_url = request.values.get("recordingUrl", None)
+        messageAlert = f"Call request made from {caller_number}. call recording url {recording_url}"
+        logging.info(f"message Alert to Waste Admin: {messageAlert}")
+        send_sms_alert("+254758750620", messageAlert)
+        # Call is not active
+        return "OK"
+
+
+@app.route('/save_recording_AF', methods=['POST'])
+def save_recording():
+    session_id = request.values.get("sessionId", None)
+    is_active = request.values.get("isActive", False)
+    recording_url = request.values.get("recordingUrl", None)
+    caller_number = format_phone_number(request.values.get("callerNumber", None))
+    print(f"Request save_recording endpoint - {request.values}")
+
+    if recording_url != None:
+        messageAlert = f"Call request made from {caller_number}. call recording url {recording_url}"
+        logging.info(f"Message Alert to Waste Admin: before final message {messageAlert}")
+        send_sms_alert("+254758750620", messageAlert)
+
+    if is_active == "1":
+        # Call is active
+        response_string = '<Say>Thank you for calling. We have saved your audio recording. Goodbye</Say>'
+        
+        response = make_response(build_response(response_string))
+        response.headers['Content-Type'] = 'text/xml'
+        return response
+    else:
+        thankyoumessage = "Thank you for contacting WasteWarriors where we value your feedback"
+        logging.info(f"Sending message to client Number {caller_number}")
+        send_sms_alert(caller_number, thankyoumessage)
+
+        if recording_url != None:
+            messageAlert = f"Call request made from {caller_number}. call recording url {recording_url}"
+            logging.info(f"Message Alert to Waste Admin: after final message {messageAlert}")
+            send_sms_alert("+254758750620", messageAlert)
+        # Call is not active
+        return "OK"
 
 def format_phone_number(phone_number):
     """
